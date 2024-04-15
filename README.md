@@ -1,3 +1,175 @@
+# Simple DragGAN
+Simple DragGAN is an Gradio application, a modification of the original DragGAN application hosted on Gradio. This is done as a part of a Final Year Project, with the purpose of making DragGAN more accessible for non-technical users.
+
+This repository has cloned the original DragGAN repository from [this commit](https://github.com/XingangPan/DragGAN/tree/d0422b1b38a7c95f7f88892366b2c07d9f3ee449), with additional files and modifications to the original files, to run Simple DragGAN.
+
+# Table of contents
+- [Requirements](#requirements)
+- [Instructions](#instructions)
+  - [Additional Instructions](#additional-instructions)
+    - [Add your own model/checkpoint](#add-your-own-modelcheckpoint)
+- [Errors](#errors)  
+- [What are the additional files / changes made to the original DragGAN to get Simple DragGAN working?](#what-are-the-additional-files--changes-made-to-the-original-draggan-to-get-simple-draggan-working)
+- [FAQ](#faq)
+- [Acknowledgement](#acknowledgement)
+- [Original DragGAN README](#original-draggan-readme)
+
+
+ 
+
+# Requirements
+- GPU of RAM above 6GB.
+  - The application can run on GPU with 6GB, however, the application may hang at times.
+- CUDA Toolkit 11.8
+  - There was problems running with CUDA Toolkit 12.2. For more information, please refer to the following issues:
+    - https://github.com/XingangPan/DragGAN/issues/146
+    - https://github.com/XingangPan/DragGAN/issues/69
+- Anaconda
+  - For reference on conda version, conda version 23.9.0 was used to work on the application.
+- For Ubuntu, recommended version is 20.04.
+  - Reason:
+    - CUDA Toolkit 11.8 is available from Ubuntu 18.04 onwards.
+    - The application was worked on Ubuntu 20.04.
+
+Simple DragGAN can be run on Windows 11 and Ubuntu 20.04 operating system.
+
+
+# Instructions
+To run Simple DragGAN, please follow the instructions below:
+
+1. Create Anaconda environment.
+```
+conda env create -f environment.yml
+```
+<details>
+<summary>Notes on environment.yml</summary>
+environment.yml is the modified version of the original DragGAN's environment.yml. The changes are as follows:
+
+1. ```cudatoolkit=11.1``` under ```dependencies``` has been commented out.
+2. ```scipy=1.11.0``` has been moved (from under ```dependencies```) to under ```pip```. Additionally, it has been changed to ```scipy==1.11.0``` (extra '=') to match with ```pip``` syntax.
+3. ```gradio==3.35.2``` has been changed to ```gradio==3.36.1``` (different version). This was done to solve the infinite loading problem on the Gradio app, where the Gradio hosted app loads infintely after a component (e.g. button) has been pressed.
+- For changes in (1) and (2), please refer to [this YouTube video](https://youtu.be/i7cI3C6_x78?si=q48nRVMpbbNiMwbR&t=115) for reasons of change.
+</details>
+
+
+2. Activate anaconda environment
+```
+conda activate stylegan3
+```
+
+3. Go to project directory
+```
+cd Simple_DragGAN
+```
+
+4. Download pre-trained weights:
+```
+python scripts/download_model.py
+```
+
+5. Run Simple DragGAN
+```
+python Simple_DragGAN_App.py
+```
+
+## Additional Instructions
+### Add your own model/checkpoint
+1. Name your .pkl file with prefix "stylegan2" (for StyleGAN2 model).
+  - The filename will be used to infer the model type. Refer to [these lines](https://github.com/Take-Saori/Simple_DragGAN/blob/66522b96a5f3bb1f0049389200d4ee8653bcc730/viz/renderer.py#L158) in [renderer.py](https://github.com/Take-Saori/Simple_DragGAN/blob/66522b96a5f3bb1f0049389200d4ee8653bcc730/viz/renderer.py).
+2. Add the .pkl file to ```checkpoints``` folder.
+3. In ```model_pickle_info.json```, add an element in the dictionary in this format:
+```
+"<Object_name>" : [
+        {
+            "pickle_name" : "<.pkl filename without ".pkl">",
+            "display_name" : "<Name to display in App>",
+            "type" : "<"Face" or "Body", or etc>",
+            "size" : <Length of image generated, only length is needed as image generated is assumed to be square>
+        }
+    ]
+```
+Example for model generating human face:
+
+```
+"Human" : [
+        {
+            "pickle_name" : "stylegan2-ffhq-512x512",
+            "display_name" : "Human (Face)",
+            "type" : "Face",
+            "size" : 512
+        }
+    ]
+```
+Example, if there are two models generting same object, but differently (body and face):
+```
+"Cat" : [
+        {
+            "pickle_name" : "stylegan2-afhqcat-512x512",
+            "display_name" : "Cat (Face)",
+            "type" : "Face",
+            "size" : 512
+        },
+        {
+            "pickle_name" : "stylegan2-cat-config-f",
+            "display_name" : "Cat (Body)",
+            "type" : "Body",
+            "size" : 512
+        }
+    ],
+```
+
+
+# Errors
+If DragGAN could not be run with issue related to OpenGL, please refer to [this issue](https://github.com/XingangPan/DragGAN/issues/39).
+- The solution from this issue (that worked): run this command "export MESA_GL_VERSION_OVERRIDE=3.3"
+
+
+# What are the additional files / changes made to the original DragGAN to get Simple DragGAN working?
+- ```sample_image.py```
+  - Script to generate sample image to display in application.
+- ```generate_image.py```
+  - Script to generate image from StyleGAN2 model. This script has been taken from [StyleGAN2-ADA repository](https://github.com/NVlabs/stylegan2-ada-pytorch/tree/d72cc7d041b42ec8e806021a205ed9349f87c6a4), and has been modified.
+- ```projector.py```
+  - Script to generate latent code from a given image. This script has been taken from [StyleGAN2-ADA repository](https://github.com/NVlabs/stylegan2-ada-pytorch/tree/d72cc7d041b42ec8e806021a205ed9349f87c6a4), and has been modified.
+- ```app_image``` folder
+  - Folder with images to display in Simple DragGAN.
+- ```Simple_DragGAN_App.py```
+  - Script to run Simple DragGAN. This script has been modified from [visualizer_drag_gradio.py](https://github.com/XingangPan/DragGAN/blob/d0422b1b38a7c95f7f88892366b2c07d9f3ee449/visualizer_drag_gradio.py), taken from the [original DragGAN repository](https://github.com/XingangPan/DragGAN/tree/d0422b1b38a7c95f7f88892366b2c07d9f3ee449).
+- ```model_pickle_info.json```
+  - JSON file to write model details for use in ```Simple_DragGAN_App.py```, mostly for display purpose.
+- ```viz/renderer.py```
+  - This is the file in the original DragGAN. The following has been changed:
+    - In line 53, from
+    ```
+    font = ImageFont.truetype('arial.ttf', round(25/512*image.size[0]))
+    ```
+    to
+    ```
+    font = ImageFont.truetype
+    os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
+    'arial.ttf'),
+    round(25/512*image.size[0]))
+    ```
+    - In line 251, from 
+    ```
+    w = self.w_load.clone().to(self._device)
+    ```
+    to
+    ```
+    w = torch.from_numpy(self.w_load).clone().to(self._device)
+    ```
+
+# FAQ
+1. Can I load StyleGAN2 models trained on non-square images in the original DragGAN application?
+  - At the point of writing this (15 April), NO. DragGAN currently supports loading models trained with square images only.
+
+# Acknowledgement
+This code is developed based on [DragGAN](https://github.com/XingangPan/DragGAN/tree/d0422b1b38a7c95f7f88892366b2c07d9f3ee449) and [StyleGAN2-ADA-Pytorch](https://github.com/NVlabs/stylegan2-ada-pytorch/tree/d72cc7d041b42ec8e806021a205ed9349f87c6a4). Most of the codes are written by these two repository.
+
+
+# Original DragGAN README
+Below is the README from the original DragGAN:
+
 <p align="center">
 
   <h1 align="center">Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold</h1>
