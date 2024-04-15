@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version = 1.0
+Icon= /home/saori/Desktop/DragGAN_stuff/DragGAN/app_image/draggan_icon.jpg
+Name= DragGAN
+Exec=gnome-terminal -e "bash -c '/home/saori/anaconda3/envs/stylegan3/bin/python /home/saori/Desktop/DragGAN_stuff/DragGAN/Simple_DragGAN_App.py;$SHELL'"
+Terminal=true
+Type=Application

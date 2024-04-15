@@ -22,6 +22,8 @@ import dnnlib
 from torch_utils.ops import upfirdn2d
 import legacy # pylint: disable=import-error
 
+import os
+
 #----------------------------------------------------------------------------
 
 class CapturedException(Exception):
@@ -50,7 +52,9 @@ def add_watermark_np(input_image_array, watermark_text="AI Generated"):
 
     # Initialize text image
     txt = Image.new('RGBA', image.size, (255, 255, 255, 0))
-    font = ImageFont.truetype('arial.ttf', round(25/512*image.size[0]))
+    # font = ImageFont.truetype('arial.ttf', round(25/512*image.size[0]))
+    font = ImageFont.truetype(os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'arial.ttf'),
+                               round(25/512*image.size[0]))    
     d = ImageDraw.Draw(txt)
 
     text_width, text_height = font.getsize(watermark_text)
@@ -248,7 +252,8 @@ class Renderer:
             label = torch.zeros([1, G.c_dim], device=self._device)
             w = G.mapping(z, label, truncation_psi=trunc_psi, truncation_cutoff=trunc_cutoff)
         else:
-            w = self.w_load.clone().to(self._device)
+            # w = self.w_load.clone().to(self._device)
+            w = torch.from_numpy(self.w_load).clone().to(self._device)
 
         self.w0 = w.detach().clone()
         self.w_plus = w_plus

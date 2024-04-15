@@ -8,16 +8,16 @@ dependencies:
   - numpy>=1.25
   - click>=8.0
   - pillow=9.4.0
-  - scipy=1.11.0
   - pytorch>=2.0.1
   - torchvision>=0.15.2
-  - cudatoolkit=11.1
+  # - cudatoolkit=11.1
   - requests=2.26.0
   - tqdm=4.62.2
   - ninja=1.10.2
   - matplotlib=3.4.2
   - imageio=2.9.0
   - pip:
+    - scipy==1.11.0
     - imgui==2.0.0
     - glfw==2.6.1
     - gradio==3.35.2

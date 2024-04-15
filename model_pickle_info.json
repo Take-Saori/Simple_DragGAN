@@ -1,0 +1,64 @@
+{
+    "Dog" : [
+        {
+            "pickle_name" : "stylegan2_dogs_1024_pytorch",
+            "display_name" : "Dog (Body)",
+            "type" : "Body",
+            "size" : 1024
+        }
+    ],
+    "Elephant" : [
+        {
+            "pickle_name" : "stylegan2_elephants_512_pytorch",
+            "display_name" : "Elephant (Body)",
+            "type" : "Body",
+            "size" : 512
+        }
+    ],
+    "Horse" : [
+        {
+            "pickle_name" : "stylegan2_horses_256_pytorch",
+            "display_name" : "Horse (Body)",
+            "type" : "Body",
+            "size" : 256
+        }
+    ],
+    "Lion" : [
+        {
+            "pickle_name" : "stylegan2_lions_512_pytorch",
+            "display_name" : "Lion (Body)",
+            "type" : "Body",
+            "size" : 512
+        }
+    ],
+    "Cat" : [
+        {
+            "pickle_name" : "stylegan2-afhqcat-512x512",
+            "display_name" : "Cat (Face)",
+            "type" : "Face",
+            "size" : 512
+        },
+        {
+            "pickle_name" : "stylegan2-cat-config-f",
+            "display_name" : "Cat (Body)",
+            "type" : "Body",
+            "size" : 512
+        }
+    ],
+    "Car" : [
+        {
+            "pickle_name" : "stylegan2-car-config-f",
+            "display_name" : "Car (Body)",
+            "type" : "Body",
+            "size" : 512
+        }
+    ],
+    "Human" : [
+        {
+            "pickle_name" : "stylegan2-ffhq-512x512",
+            "display_name" : "Human (Face)",
+            "type" : "Face",
+            "size" : 512
+        }
+    ]
+}

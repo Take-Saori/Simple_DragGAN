@@ -150,6 +150,15 @@ def convert_tf_generator(tf_G):
     kwarg('structure')
     kwarg('conditioning')
     kwarg('fused_modconv')
+    if 'resolution_w' in tf_kwargs:
+        tf_kwargs.pop('resolution_w', None)
+        tf_kwargs.pop('resolution_h', None)
+
+    print()
+    print("tf_kwargs")
+    print(tf_kwargs)
+    print()
+
     unknown_kwargs = list(set(tf_kwargs.keys()) - known_kwargs)
     if len(unknown_kwargs) > 0:
         raise ValueError('Unknown TensorFlow kwarg', unknown_kwargs[0])
@@ -247,6 +256,9 @@ def convert_tf_discriminator(tf_D):
     )
 
     # Check for unknown kwargs.
+    if 'resolution_w' in tf_kwargs:
+        tf_kwargs.pop('resolution_w', None)
+        tf_kwargs.pop('resolution_h', None)
     kwarg('structure')
     kwarg('conditioning')
     unknown_kwargs = list(set(tf_kwargs.keys()) - known_kwargs)
