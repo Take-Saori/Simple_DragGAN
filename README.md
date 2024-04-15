@@ -125,6 +125,13 @@ If DragGAN could not be run with issue related to OpenGL, please refer to [this 
 
 
 # What are the additional files / changes made to the original DragGAN to get Simple DragGAN working?
+- ```environment.yml```
+  - File to create anaconda environment.
+  - Changes:
+    1. ```cudatoolkit=11.1``` under ```dependencies``` has been commented out.
+    2. ```scipy=1.11.0``` has been moved (from under ```dependencies```) to under ```pip```. Additionally, it has been changed to ```scipy==1.11.0``` (extra '=') to match with ```pip``` syntax.
+    3. ```gradio==3.35.2``` has been changed to ```gradio==3.36.1``` (different version). This was done to solve the infinite loading problem on the Gradio app, where the Gradio hosted app loads infintely after a component (e.g. button) has been pressed.
+    - For changes in (1) and (2), please refer to [this YouTube video](https://youtu.be/i7cI3C6_x78?si=q48nRVMpbbNiMwbR&t=115) for reasons of change.
 - ```sample_image.py```
   - Script to generate sample image to display in application.
 - ```generate_image.py```
