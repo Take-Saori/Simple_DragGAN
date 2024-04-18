@@ -57,17 +57,33 @@ environment.yml is the modified version of the original DragGAN's environment.ym
 conda activate stylegan3
 ```
 
-3. Go to project directory
+3. Install torch again.
+```
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+<details>
+<summary>Reason for torch installation</summary>
+I encountered this error without the torch installation:
+
+![error image](/readme_images/error_img.png)
+
+It worked fine after running the above pip command.
+
+For reference, this is the settings selected on the [official torch site](https://pytorch.org/) to get the command:
+![install torch image](/readme_images/torch_install.png)
+</details>
+
+4. Go to project directory
 ```
 cd Simple_DragGAN
 ```
 
-4. Download pre-trained weights:
+5. Download pre-trained weights:
 ```
 python scripts/download_model.py
 ```
 
-5. Run Simple DragGAN
+6. Run Simple DragGAN
 ```
 python Simple_DragGAN_App.py
 ```
@@ -120,7 +136,22 @@ Example, if there are two models generting same object, but differently (body an
 
 
 # Errors
-If DragGAN could not be run with issue related to OpenGL, please refer to [this issue](https://github.com/XingangPan/DragGAN/issues/39).
+If DragGAN cannot be run due to the following error:
+![error image](/readme_images/error_img.png)
+Try running the following pip command to install torch again:
+```
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+<details>
+<summary>Settings to get pip command from official torch site</summary>
+For reference, this is the settings selected on the [official torch site](https://pytorch.org/) to get the command:
+
+![install torch image](/readme_images/torch_install.png)
+
+</details>
+
+
+If DragGAN application could not be run with issue related to OpenGL, please refer to [this issue](https://github.com/XingangPan/DragGAN/issues/39).
 - The solution from this issue (that worked): run this command "export MESA_GL_VERSION_OVERRIDE=3.3"
 
 
@@ -132,6 +163,10 @@ If DragGAN could not be run with issue related to OpenGL, please refer to [this 
     2. ```scipy=1.11.0``` has been moved (from under ```dependencies```) to under ```pip```. Additionally, it has been changed to ```scipy==1.11.0``` (extra '=') to match with ```pip``` syntax.
     3. ```gradio==3.35.2``` has been changed to ```gradio==3.36.1``` (different version). This was done to solve the infinite loading problem on the Gradio app, where the Gradio hosted app loads infintely after a component (e.g. button) has been pressed.
     - For changes in (1) and (2), please refer to [this YouTube video](https://youtu.be/i7cI3C6_x78?si=q48nRVMpbbNiMwbR&t=115) for reasons of change.
+- ```requirements.txt```
+  - Text file for pip installation.
+  - Changes:
+    1. With the same reason as ```environment.yml```, ```gradio==3.35.2``` has been changed to ```gradio==3.36.1``` 
 - ```sample_image.py```
   - Script to generate sample image to display in application.
 - ```generate_image.py```
