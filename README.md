@@ -136,7 +136,7 @@ Example, if there are two models generting same object, but differently (body an
 
 
 # Errors
-If DragGAN cannot be run due to the following error:
+1. If DragGAN cannot be run due to the following error:
 ![error image](/readme_images/error_img.png)
 Try running the following pip command to install torch again:
 ```
@@ -151,8 +151,8 @@ For reference, this is the settings selected on the [official torch site](https:
 </details>
 
 
-If DragGAN application could not be run with issue related to OpenGL, please refer to [this issue](https://github.com/XingangPan/DragGAN/issues/39).
-- The solution from this issue (that worked): run this command "export MESA_GL_VERSION_OVERRIDE=3.3"
+2. If DragGAN application could not be run with issue related to OpenGL, please refer to [this issue](https://github.com/XingangPan/DragGAN/issues/39).
+  - The solution from this issue (that worked): run this command "export MESA_GL_VERSION_OVERRIDE=3.3"
 
 
 # What are the additional files / changes made to the original DragGAN to get Simple DragGAN working?
