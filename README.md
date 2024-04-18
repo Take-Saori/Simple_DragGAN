@@ -1,5 +1,5 @@
 # Simple DragGAN
-Simple DragGAN is an Gradio application, a modification of the original DragGAN application hosted on Gradio. This is done as a part of a Final Year Project, with the purpose of making DragGAN more accessible for non-technical users.
+Simple DragGAN is an Gradio application, a modification of the original DragGAN application hosted on Gradio. This is done as a part of a Final Year Project, with the purpose of making DragGAN more accessible for non-technical users. As such, some functions are not available to make the application simple. (e.g. selection of w or w+ for latent space is not available. The default value, w+, will be used throughout.)
 
 This repository has cloned the original DragGAN repository from [this commit](https://github.com/XingangPan/DragGAN/tree/d0422b1b38a7c95f7f88892366b2c07d9f3ee449), with additional files and modifications to the original files, to run Simple DragGAN.
 
