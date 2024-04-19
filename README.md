@@ -3,20 +3,62 @@ Simple DragGAN is an Gradio application, a modification of the [original DragGAN
 
 This repository has cloned the original DragGAN repository from [this commit](https://github.com/XingangPan/DragGAN/tree/d0422b1b38a7c95f7f88892366b2c07d9f3ee449), with additional files and modifications to the original files, to run Simple DragGAN.
 
+
 # Table of contents
-- [Requirements](#requirements)
-- [Instructions](#instructions)
+- [Simple DragGAN appearance](#simple-draggan-appearance)
+- [Simple DragGAN additional feature](#simple-draggan-additional-feature)
+- [Installation requirements](#requirements)
+- [Installation instructions](#instructions)
   - [Additional Instructions](#additional-instructions)
     - [Add your own model/checkpoint](#add-your-own-modelcheckpoint)
-- [Errors](#errors)  
+- [Errors when running Simple DragGAN](#errors-when-running-simple-draggan)  
 - [What are the additional files / changes made to the original DragGAN to get Simple DragGAN working?](#what-are-the-additional-files--changes-made-to-the-original-draggan-to-get-simple-draggan-working)
 - [FAQ](#faq)
 - [Acknowledgement](#acknowledgement)
 - [Original DragGAN README](#original-draggan-readme)
 
 
- 
+# Simple DragGAN appearance
 
+## Image editing tab
+![app_edit_ui](/readme_images/simple_draggan_edit_ui.png)
+
+## Guide tab
+![app_guide_tab](/readme_images/simple_draggan_guide.png)
+
+## FAQ tab
+![app_faq_tab](/readme_images/simple_draggan_faq.png)
+
+
+# Simple DragGAN additional feature
+Simple DragGAN has a feature "Generate Custom Image". In this feature, users can upload their real image, and Simple DragGAN will try to reproduce the image with latent code conversion. The reproduced image will then be ready for editing.
+
+Below is a gif showing the usage of the feature.
+![image_generation_gif](/readme_images/image_generation_method.gif)
+
+The latent code conversion is done using ```projector.py```, taken from [StyleGAN2-ADA-Pytorch repository](https://github.com/NVlabs/stylegan2-ada-pytorch/tree/d72cc7d041b42ec8e806021a205ed9349f87c6a4).
+
+The quality of the reproduced image depends on several factors:
+- The selected model (to generate image for editing) generates the same object as the real image's target object.
+  - For e.g., choose the Dog model when uploading a dog image.
+- Square image
+  - The uploaded image is recommended to be a square image as the models are trained with square images.
+- Similarity of the real image to the image dataset the model was trained on.
+  - E.g. If the model is trained strictly on cropped human face images, upload image of cropped human face, not an image of face cropped from shoulder.
+- "Accuracy"
+  - There is a slider to adjust "Accuracy" of the reproduced image (refer to the gif above). This represents the steps to take for the latent code conversion script to generate the latent code. Hence, higher the "Accuracy" (meaning more steps), the higher chances that the reproduced image is similar.
+
+<details>
+<summary>Expand to view examples of successful and failed conversion</summary>
+Successful conversion:
+
+![successful conversion](/app_image/custom_image_success.png)
+
+Failed conversion:
+
+![failed conversion](/app_image/custom_image_failed.png)
+</details>
+ 
 # Requirements
 - GPU of RAM above 6GB.
   - The application can run on GPU with 6GB, however, the application may hang at times.
@@ -135,7 +177,7 @@ Example, if there are two models generting same object, but differently (body an
 ```
 
 
-# Errors
+# Errors when running Simple DragGAN
 1. If DragGAN cannot be run due to the following error:
 ![error image](/readme_images/error_img.png)
 Try running the following pip command to install torch again:
@@ -169,7 +211,7 @@ For reference, this is the settings selected on the [official torch site](https:
     1. With the same reason as ```environment.yml```, ```gradio==3.35.2``` has been changed to ```gradio==3.36.1``` 
 - ```sample_image.py```
   - Script to generate sample image to display in application.
-- ```generate_image.py```
+- ```generate.py```
   - Script to generate image from StyleGAN2 model. This script has been taken from [StyleGAN2-ADA repository](https://github.com/NVlabs/stylegan2-ada-pytorch/tree/d72cc7d041b42ec8e806021a205ed9349f87c6a4), and has been modified.
 - ```projector.py```
   - Script to generate latent code from a given image. This script has been taken from [StyleGAN2-ADA repository](https://github.com/NVlabs/stylegan2-ada-pytorch/tree/d72cc7d041b42ec8e806021a205ed9349f87c6a4), and has been modified.
